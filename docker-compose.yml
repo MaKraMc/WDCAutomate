@@ -1,0 +1,12 @@
+services:
+  wdcautomate:
+    image: ghcr.io/makramc/wdcautomate:latest
+    environment:
+      #Your phone number with country code
+      - WDCUsername="123456789"
+      - WDCPassword="changeme"
+
+      #The time you want to run the script with leading zeros.
+      #THIS IS BRITISH TIME, same as in WDC.
+      - HOUR=20
+      - MINUTE=05

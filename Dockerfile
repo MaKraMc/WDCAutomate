@@ -1,0 +1,23 @@
+FROM python:3.12-alpine
+
+RUN apk update
+
+#Set timezone to Europe/London, same as on wdc
+ENV TZ=Europe/London
+
+#Install required packages
+RUN apk add firefox
+RUN apk add tesseract-ocr
+RUN apk add tesseract-ocr-data-eng
+
+#Copy the code
+WORKDIR /app
+COPY . /app
+
+#Install the python requirements
+RUN pip3 install -r /app/requirements.txt
+
+#Make sure the startup script is executable
+RUN chmod +x /app/startup.sh
+
+CMD "/app/startup.sh"
