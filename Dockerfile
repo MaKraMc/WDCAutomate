@@ -9,6 +9,8 @@ ENV TZ=Europe/London
 RUN apk add firefox
 RUN apk add tesseract-ocr
 RUN apk add tesseract-ocr-data-eng
+#Zlib is required for armv7
+RUN apk add zlib-dev
 
 #Copy the code
 WORKDIR /app
