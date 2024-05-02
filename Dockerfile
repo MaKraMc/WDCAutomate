@@ -6,9 +6,9 @@ RUN apk update
 ENV TZ=Europe/London
 
 #Install required packages
-RUN apk add firefox
-RUN apk add tesseract-ocr
-RUN apk add tesseract-ocr-data-eng
+RUN apk add --no-cache firefox
+RUN apk add --no-cache tesseract-ocr
+RUN apk add --no-cache tesseract-ocr-data-eng
 #Zlib is required for armv7
 RUN apk add zlib-dev
 
