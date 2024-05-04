@@ -6,6 +6,10 @@ To solve the login captcha we use tesseract ocr.
 # Prerequisites
 You need [docker engine](https://docs.docker.com/engine/install/) or docker desktop installed.
 
+> [!Warning]
+> Runnung on raspberypi currently requires a 64-bit operating system like raspian-64 (Raspberry Pi OS 64 bit) or Ubuntu.
+> Ubuntu noble is 64-bit by default
+
 # Running
 
 To run the container, specify your environment variables and run the image using docker:
@@ -14,7 +18,7 @@ To run the container, specify your environment variables and run the image using
 ```bash
 docker run -e "HOUR=20" -e "MINUTE=05" -e "WDCUsername=123456789" -e "WDCPassword=changeme" -d ghcr.io/makramc/wdcautomate:latest
 ```
-That's it! To verify that the container is running, list all running containers using:
+That's it! To verify that the container is running list all running containers using:
 ```bash
 docker ps
 ```
