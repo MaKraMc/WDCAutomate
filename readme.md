@@ -3,12 +3,20 @@
 This Image uses python selenium and Firefox to automatically sign you in and press the "Quantify" button for you on a specified time.\
 To solve the login captcha we use tesseract ocr.
 
+# Prerequisites
+You need [docker engine](https://docs.docker.com/engine/install/) or docker desktop installed.
+
 # Running
 
 To run the container, specify your environment variables and run the image using docker:
+> [!NOTE]
 > The container runs in London time, just like WDC.
 ```bash
-docker run -e "HOUR=20" -e "MINUTE=05" -e "WDCUsername=123456789" -e "WDCPassword=changeme" -it ghcr.io/makramc/wdcautomate:latest
+docker run -e "HOUR=20" -e "MINUTE=05" -e "WDCUsername=123456789" -e "WDCPassword=changeme" -d ghcr.io/makramc/wdcautomate:latest
+```
+That's it! To verify that the container is running, list all running containers using:
+```bash
+docker ps
 ```
 
 Or deploy using docker-compose:
