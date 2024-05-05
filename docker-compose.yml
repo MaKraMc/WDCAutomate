@@ -2,6 +2,9 @@ services:
   wdcautomate:
     image: ghcr.io/makramc/wdcautomate:latest
     environment:
+      #The Platform you want to use (wdcvip.top/dslvip.com)
+      - platform="dslvip.com"
+
       #Your phone number with country code
       - WDCUsername="123456789"
       - WDCPassword="changeme"

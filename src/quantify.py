@@ -6,12 +6,12 @@ from time import sleep
 
 import re
 
-def quantify(driver):
+def quantify(driver, platform):
     print("Loading the quantify page...", end='', flush=True)
     j = 0
     #Navigate to the "quantify" page. Sometimes we need to try multiple times
-    while not driver.current_url == 'https://wdcvip.top/index.html/pc.html#/basic':
-        driver.get('https://wdcvip.top/index.html/pc.html#/basic')
+    while not driver.current_url == f'https://{platform}/index.html/pc.html#/basic':
+        driver.get(f'https://{platform}/index.html/pc.html#/basic')
         sleep(1)
         j += 1
         if j == 5:

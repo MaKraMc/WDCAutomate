@@ -9,13 +9,13 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from captcha import solveCaptcha
 
-def login(driver):
+def login(driver, platform):
     
     #Load the login page
-    print("Loading WDCVIP.top...", end='', flush=True)
+    print(f"Loading {platform}...", end='', flush=True)
 
     try:
-        driver.get('https://wdcvip.top/index.html/pc.html#/login')
+        driver.get(f'https://{platform}/index.html/pc.html#/login')
     except:
         print("Error\nCould not load the page. Retrying...")
         return False
@@ -34,7 +34,21 @@ def login(driver):
 
     #Wait for the elements to load
     print("Waiting for the whole webpage to load...", end='', flush=True)
-    HTMLUsername = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[type="text"][name="userName"]')))
+
+    #Wait for the loading spinner to disappear
+    WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.van-toast.van-toast--loading[style*="display: none"]')))
+
+    try:
+        #Wait for the login form to load
+        HTMLUsername = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[type="text"][name="userName"]')))
+        HTMLPassword = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[type="password"][name="password"]')))
+        HTMLCaptchaImage = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'img.vcode-img')))
+        
+    except:
+        print("Error\nCould not find the login interface.")
+        driver.quit()
+        exit("Maybe you used the wrong platform URL? Exiting...")
+    
     print("Done")
 
     print("Logging in...")
@@ -47,13 +61,11 @@ def login(driver):
     HTMLUsername.send_keys(WDCUsername)
 
     #Paste the password
-    HTMLPassword = driver.find_element(By.CSS_SELECTOR, 'input[type="password"][name="password"]')
     HTMLPassword.send_keys(WDCPassword)
 
     #Solve the captcha
     #We will try to solve the using tessaract OCR. This has a success rate of about 85%.
     #If it fails, we will retry the captcha 4 times.
-    HTMLCaptchaImage = driver.find_element(By.CSS_SELECTOR, 'img.vcode-img')
     PNGCaptchaImage = HTMLCaptchaImage.screenshot_as_png
     
     captcha = solveCaptcha(PNGCaptchaImage)
@@ -66,7 +78,11 @@ def login(driver):
             return False
         print("Did not recognize captcha. Retrying...")
         #Request a new captcha by clicking the image
-        HTMLCaptchaImage.click()
+        try:
+            HTMLCaptchaImage.click()
+        except:
+            print("Could not request a new captcha. This can happen if there is a dialog blocking the captcha.\nRetrying...")
+            return False
         #Wait for the new image to load
         sleep(3)
         PNGCaptchaImage = HTMLCaptchaImage.screenshot_as_png
@@ -93,7 +109,7 @@ def login(driver):
     #Check if we got redirected. If not, we failed to login
     if re.search(r'login', driver.current_url):
         #Maybe there is hope if we manually navigate to the quantify page
-        driver.get('https://wdcvip.top/index.html/pc.html#/basic')
+        driver.get(f'https://{platform}/index.html/pc.html#/basic')
         sleep(3)
         if re.search(r'login', driver.current_url):
             print("Login failed. Retrying...")

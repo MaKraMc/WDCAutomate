@@ -1,4 +1,4 @@
-# Automatically quantify in WDCquantify
+# Automatically quantify in DLSQuantify/WDCquantify
 
 This Image uses python selenium and Firefox to automatically sign you in and press the "Quantify" button for you on a specified time.\
 To solve the login captcha we use tesseract ocr.
@@ -15,6 +15,9 @@ You need [docker engine](https://docs.docker.com/engine/install/) or docker desk
 To run the container, specify your environment variables and run the image using docker:
 > [!NOTE]
 > The container runs in London time, just like WDC.
+
+> [!NOTE]
+> The container now uses dslvip.com by default. If you want to use wdcvip.top use environment variable `platform` like this: `"platform=wdcvip.top"`.
 ```bash
 docker run -e "HOUR=20" -e "MINUTE=05" -e "WDCUsername=123456789" -e "WDCPassword=changeme" -d ghcr.io/makramc/wdcautomate:latest
 ```
@@ -34,6 +37,8 @@ services:
       - MINUTE=05
       - WDCUsername=123456789
       - WDCPassword=yourpassword
+      #The Platform you want to use (wdcvip.top/dslvip.com)
+      - platform="dslvip.com"
 ```
 
 # Contents
@@ -57,7 +62,7 @@ docker build -t wdcautomate:test .
 ```
 
 # Disclamer
-WDC Quantify is likely a pyramid scheme. Please do not "invest" your hard earned money on this platform.
+DSL Quantify/WDC Quantify is likely a ponzi/pyramid scheme. Please do not "invest" your hard earned money on this platform.
 I am of course not responsible for any losses on this platform or through my script.
 
 I created this project as a proof of concept and to educate myself and learn about python and docker and had a lot of fun creating it. I do not know if I find the time/resources to maintain this if something ever changes on WDC's website/backend.
