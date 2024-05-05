@@ -4,24 +4,24 @@ from quantify import quantify
 from init import init
 
 def main():
-    init()
+    platform = init()
     #Print info without new line
     print("Loading Firefox...", end='', flush=True)
     driver = loadFirefox()
     print("Done")
     
     #Try three times to login
-    logins = 1
-    isLoggedin = login(driver)
+    logins = 0
+    isLoggedin = False
     while not isLoggedin:
-        isLoggedin = login(driver)
+        isLoggedin = login(driver, platform)
         logins += 1
         if logins == 3:
             driver.quit()
             exit("Could not login after 3 tries. Exiting...")
     
     #Do the quantification
-    quantify(driver)
+    quantify(driver, platform)
 
 
 if __name__ == "__main__":
