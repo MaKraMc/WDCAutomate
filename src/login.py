@@ -33,7 +33,7 @@ def login(driver, platform):
         exit()
 
     #Wait for the elements to load
-    print("Waiting for the whole webpage to load...", end='', flush=True)
+    print("Waiting for the login page...", end='', flush=True)
 
     #Wait for the loading spinner to disappear
     WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.van-toast.van-toast--loading[style*="display: none"]')))
@@ -90,6 +90,7 @@ def login(driver, platform):
         captcha = solveCaptcha(PNGCaptchaImage)
         i += 1
 
+    print(f"Got captcha: {captcha}")
 
     #Paste the captcha
     HTMLCaptcha = driver.find_element(By.CSS_SELECTOR, 'input[type="text"][name="vcode"]')
