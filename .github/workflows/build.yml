@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - "main"
-      - "dev"
+      - "dev*"
+    tags:
+      - "v*.*.*"
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,11 +24,24 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.GH_USERNAME }}
           password: ${{ secrets.GH_TOKEN }}
+      - name: Generate image metadata
+        id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ghcr.io/makramc/wdcautomate
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           #linux/arm/v7
-          push: true
-          tags: ghcr.io/makramc/wdcautomate:latest
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.metadata.outputs.tags }}
