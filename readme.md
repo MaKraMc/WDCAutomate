@@ -17,7 +17,7 @@ To run the container, specify your environment variables and run the image using
 > The container runs in London time, just like WDC.
 
 > [!NOTE]
-> The container now uses dslvip.com by default. If you want to use wdcvip.top use environment variable `platform` like this: `"platform=wdcvip.top"`.
+> The container now uses dslvip.com by default. If you want to use wdcvip.top use environment variable `PLATFORM` like this: `"PLATFORM=wdcvip.top"`.
 ```bash
 docker run -e "HOUR=20" -e "MINUTE=05" -e "WDCUsername=123456789" -e "WDCPassword=changeme" -d ghcr.io/makramc/wdcautomate:latest
 ```
