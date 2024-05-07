@@ -9,8 +9,7 @@ ENV TZ=Europe/London
 RUN apk add --no-cache firefox
 RUN apk add --no-cache tesseract-ocr
 RUN apk add --no-cache tesseract-ocr-data-eng
-#Zlib is required for armv7
-RUN apk add zlib-dev
+
 
 #Copy the code
 WORKDIR /app
@@ -18,6 +17,9 @@ COPY . /app
 
 #Install the python requirements
 RUN pip3 install -r /app/requirements.txt
+
+#Install geckodriver
+RUN python3 /app/src/setup.py
 
 #Make sure the startup script is executable
 RUN chmod +x /app/startup.sh
