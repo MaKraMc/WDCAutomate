@@ -43,6 +43,7 @@ def quantify(driver, platform):
     i = 0
     quantifys = 0
     while i < 40:
+        i += 1
         if quantify_button.is_enabled():
             print(f"[{quantifys}/5] Quantifying...")
             #We use Javascript to click the button, since the button may be obscured by a dialog
@@ -55,4 +56,3 @@ def quantify(driver, platform):
                 print("Limit reached. See you again tomorrow!")
                 exit(0)
         sleep(30)
-        i += 1
