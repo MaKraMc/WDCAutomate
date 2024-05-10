@@ -40,8 +40,14 @@ def quantify(driver, platform):
     #If the button is enabled, we click it and wait 30 seconds
     #If the button is not enabled, we wait 30 seconds, since we are probaply currently quantifying
 
+    #Get the current available quantitive frequency
+    try:
+        quantifys = driver.get_element_by_css_selector('div.vip-card>div.grid-wrap>span:nth-child(4)').get_attribute("innerHTML")
+        quantifys = re.search(r'\d+', quantifys).group(0)
+    except:
+        quantifys = 0
+
     i = 0
-    quantifys = 0
     while i < 40:
         i += 1
         if quantify_button.is_enabled():
