@@ -111,6 +111,7 @@ def login(driver, platform):
     if re.search(r'login', driver.current_url):
         #In some weird cases, login seems to fail while still generating a valid session
         #We have to go to the login page and then to the personal page
+        print("Checking login")
         driver.get(f'https://{platform}/index.html')
         sleep(3)
         driver.get(f'https://{platform}/index.html/pc.html#/basic')
