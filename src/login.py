@@ -19,10 +19,15 @@ def login(driver, platform):
     except:
         print("Error\nCould not load the page. Retrying...")
         return False
-    
-    print("Done")
-    #Load the environment variables
 
+    print("Done")
+
+    #If we previously attempted to login, we might already be logged in
+    if not re.search(r'login', driver.current_url):
+        print("Already logged in!")
+        return True
+    
+    #Load the environment variables
     WDCUsername=getenv("WDCUsername")
     WDCPassword=getenv("WDCPassword")
 
@@ -110,7 +115,7 @@ def login(driver, platform):
     #Check if we got redirected. If not, we failed to login
     if re.search(r'login', driver.current_url):
         #In some weird cases, login seems to fail while still generating a valid session
-        #We have to go to the login page and then to the personal page
+        #In this case we have to go to the main page and then to the personal page
         print("Checking login")
         driver.get(f'https://{platform}/index.html')
         sleep(3)
