@@ -109,7 +109,10 @@ def login(driver, platform):
 
     #Check if we got redirected. If not, we failed to login
     if re.search(r'login', driver.current_url):
-        #Maybe there is hope if we manually navigate to the quantify page
+        #In some weird cases, login seems to fail while still generating a valid session
+        #We have to go to the login page and then to the personal page
+        driver.get(f'https://{platform}/index.html')
+        sleep(3)
         driver.get(f'https://{platform}/index.html/pc.html#/basic')
         sleep(3)
         if re.search(r'login', driver.current_url):
