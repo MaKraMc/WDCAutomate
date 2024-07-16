@@ -1,4 +1,6 @@
 # Automatically quantify in DLSQuantify/WDCquantify
+> [!Caution]
+> Since about 06/2024 WDC and DSL "pulled the rug" and are not procassing any outgoing transactions on their platform. **DO NOT INVEST MONEY IN THIS SCAM.** I will keep this repository online purely for educational purposes.
 
 This Image uses python selenium and Firefox to automatically sign you in and press the "Quantify" button for you on a specified time.\
 To solve the login captcha we use tesseract ocr.
